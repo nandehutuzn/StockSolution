@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zn.Core.Tools;
 
 namespace Zn.Core.Stock.MainHost
 {
@@ -20,9 +21,16 @@ namespace Zn.Core.Stock.MainHost
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ILog _log = Logger.Current;
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
     }
 }
