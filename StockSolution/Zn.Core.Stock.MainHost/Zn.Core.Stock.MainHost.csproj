@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -93,6 +99,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Zn.Core.StockModel\Zn.Core.StockModel.csproj">
+      <Project>{e3eba358-5052-4cf7-a47e-c84483f2bdcf}</Project>
+      <Name>Zn.Core.StockModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zn.Core.Tools\Zn.Core.Tools.csproj">
       <Project>{1051bf5f-a927-45cd-baa7-27d71f5239d2}</Project>
       <Name>Zn.Core.Tools</Name>

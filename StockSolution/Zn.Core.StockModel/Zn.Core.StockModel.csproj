@@ -52,10 +52,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockIndexModel.cs" />
     <Compile Include="StockRealtimeModel.cs" />
+    <Compile Include="StockSyatemDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zn.Core.Tools\Zn.Core.Tools.csproj">
+      <Project>{1051bf5f-a927-45cd-baa7-27d71f5239d2}</Project>
+      <Name>Zn.Core.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

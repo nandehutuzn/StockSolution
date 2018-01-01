@@ -33,11 +33,12 @@ namespace Zn.Core.Stock.MainHost
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            string url = string.Format("http://stock.liangyee.com/bus-api/stock/freeStockMarketData/getDailyKBar?userKey={0}&startDate={1}&symbol={2}&endDate={3}&type={4}", _key, "2017-08-30", "603019", "2017-12-30", "0");
-            url = "http://hq.sinajs.cn/list=sh601006";//深证  sz=
-            var result = HttpHelper.GetHttpString(url);//第一个地址需用 UTF-8字符
-            await result;
-            MessageBox.Show(result.Result);
+            //string url = string.Format("http://stock.liangyee.com/bus-api/stock/freeStockMarketData/getDailyKBar?userKey={0}&startDate={1}&symbol={2}&endDate={3}&type={4}", _key, "2017-08-30", "603019", "2017-12-30", "0");
+            //url = "http://hq.sinajs.cn/list=sh601006";//深证  sz=
+            //var result = HttpHelper.GetHttpString(url);//第一个地址需用 UTF-8字符
+            //await result;
+            //MessageBox.Show(result.Result);
+
         }
 
     }
