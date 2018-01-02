@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Click="Button_Click" Width="300" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+            <Button x:Name="btnStart" Content="启动" MinWidth="60" Margin="20" Click="btnStart_Click"/>
+            <Button x:Name="btnEnd" Content="关闭" MinWidth="60" Margin="20" Click="btnEnd_Click" IsEnabled="False"/>
+            <Button x:Name="btnSetting" Content="设置" MinWidth="60" Margin="20" Click="btnSetting_Click"/>
+        </StackPanel>
+        <GroupBox Grid.Column="1" Margin="10" Header="操作日志">
+            <ListBox Margin="5" x:Name="listBoxLog">
+            </ListBox>
+        </GroupBox>
     </Grid>
 </Window>

@@ -10,23 +10,8 @@ using Zn.Core.Tools;
 
 namespace Zn.Core.StockModel
 {
-    public class StockSyatemDbContext : DbContext
+    public abstract class StockSyatemDbContext : DbContext
     {
-        private ILog _log = Logger.Current;
-
-        private StockSyatemDbContext() { }
-
-        private static StockSyatemDbContext _default;
-        public static StockSyatemDbContext Default {
-            get {
-                if (_default == null)
-                {
-                    Interlocked.CompareExchange(ref _default, new StockSyatemDbContext(), null);
-                }
-                return _default;
-            }
-        }
-
         /// <summary>
         /// 每日股票模型
         /// </summary>
@@ -44,5 +29,14 @@ namespace Zn.Core.StockModel
         /// </summary>
         public DbSet<StockRealtimeModel> RealtimeModel { get; set; }
 
+        /// <summary>
+        /// 股票基本信息模型
+        /// </summary>
+        public DbSet<StockInfoModel> StockInfoModel { get; set; }
+
+        /// <summary>
+        /// 股票板块模型
+        /// </summary>
+        public DbSet<StockSectorEnumModel> SectorEnumModel { get; set; }
     }
 }

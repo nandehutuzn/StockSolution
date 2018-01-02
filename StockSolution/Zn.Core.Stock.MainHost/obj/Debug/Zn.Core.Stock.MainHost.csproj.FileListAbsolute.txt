@@ -20,3 +20,5 @@ E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\Zn
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\EntityFramework.xml
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\EntityFramework.SqlServer.dll
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\EntityFramework.SqlServer.xml
+E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Win_StockInfo.baml
+E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Win_StockInfo.g.cs

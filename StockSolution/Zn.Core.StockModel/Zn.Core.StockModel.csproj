@@ -48,10 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StockDailyModel.cs" />
+    <Compile Include="DataBaseService.cs" />
+    <Compile Include="Interface\IDataBaseService.cs" />
+    <Compile Include="Model\StockDailyModel.cs" />
+    <Compile Include="Model\StockInfoModel.cs" />
+    <Compile Include="Model\StockSectorEnumModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockIndexModel.cs" />
-    <Compile Include="StockRealtimeModel.cs" />
+    <Compile Include="Model\StockIndexModel.cs" />
+    <Compile Include="Model\StockRealtimeModel.cs" />
     <Compile Include="StockSyatemDbContext.cs" />
   </ItemGroup>
   <ItemGroup>

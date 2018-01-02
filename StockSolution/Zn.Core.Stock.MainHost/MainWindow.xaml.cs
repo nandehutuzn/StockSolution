@@ -41,5 +41,22 @@ namespace Zn.Core.Stock.MainHost
 
         }
 
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEnd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        {
+            Win_StockInfo win = new Win_StockInfo();
+            win.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+            win.Owner = Application.Current.MainWindow;
+            win.ShowDialog();
+        }
     }
 }

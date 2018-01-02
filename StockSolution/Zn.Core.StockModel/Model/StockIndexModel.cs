@@ -50,5 +50,11 @@ namespace Zn.Core.StockModel
         /// </summary>
         [Display(Name="成交额(万元)")]
         public double TradingPriceSum { get; set; }
+
+        /// <summary>
+        /// 交易日
+        /// </summary>
+        [Display(Name = "交易日")]
+        public DateTime Date { get; set; }
     }
 }
