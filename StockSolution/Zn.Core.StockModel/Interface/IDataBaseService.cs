@@ -11,15 +11,15 @@ namespace Zn.Core.StockModel
     /// </summary>
     public interface IDataBaseService
     {
-        List<StockDailyModel> DailyModels { get;}
+        List<StockDailyModel> DailyModels(bool needUpdate = false);
 
-        List<StockIndexModel> IndexModels { get;}
+        List<StockIndexModel> IndexModels(bool needUpdate = false);
 
-        List<StockRealtimeModel> RealtimeModels { get;}
+        List<StockRealtimeModel> RealtimeModels(bool needUpdate = false);
 
-        List<StockSectorEnumModel> SectorEnumModels { get; }
+        List<StockSectorEnumModel> SectorEnumModels(bool needUpdate = false);
 
-        List<StockInfoModel> StockInfoModels { get; }
+        List<StockInfoModel> StockInfoModels(bool needUpdate = false);
 
         Task<int> InsertDailyModel(StockDailyModel model);
 

@@ -34,17 +34,29 @@ namespace Zn.Core.Stock.MainHost
             LoadSource();
         }
 
-        private void LoadSource()
+        private async void LoadSource()
         {
-            var source = _service.SectorEnumModels;
-            cmbSector.ItemsSource = source;
-            listBoxSector.ItemsSource = source;
-            stockDataGrid.ItemsSource = _service.StockInfoModels;
+            Tuple<List<StockSectorEnumModel>, List<StockInfoModel>> result;
+            result = await Task.Run(() =>
+                {
+                    return new Tuple<List<StockSectorEnumModel>, List<StockInfoModel>>(_service.SectorEnumModels(true), 
+                        _service.StockInfoModels(true));
+                });
+            try
+            {
+                cmbSector.ItemsSource = result.Item1;
+                listBoxSector.ItemsSource = result.Item1;
+                stockDataGrid.ItemsSource = result.Item2;
 
-            cmbSector.DisplayMemberPath = "SectorName";
-            cmbSector.SelectedValuePath = "Id";
-            listBoxSector.DisplayMemberPath = "SectorName";
-            listBoxSector.SelectedValuePath = "Id";
+                cmbSector.DisplayMemberPath = "SectorName";
+                cmbSector.SelectedValuePath = "Id";
+                listBoxSector.DisplayMemberPath = "SectorName";
+                listBoxSector.SelectedValuePath = "Id";
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+            }
         }
 
         private async void btnAddSector_Click(object sender, RoutedEventArgs e)
@@ -60,7 +72,7 @@ namespace Zn.Core.Stock.MainHost
                 await result;
                 if (result.Result == 1)
                 {
-                    MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
+                    //MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
                     LoadSource();
                 }
             }
@@ -90,7 +102,7 @@ namespace Zn.Core.Stock.MainHost
                 await result;
                 if (result.Result == 1)
                 {
-                    MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
+                    //MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
                     LoadSource();
                 }
             }

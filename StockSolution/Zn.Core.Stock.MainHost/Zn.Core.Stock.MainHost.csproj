@@ -59,6 +59,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\ConverterIntToStockEnums.cs" />
+    <Compile Include="Converter\ConverterIntToStockType.cs" />
     <Compile Include="Win_StockInfo.xaml.cs">
       <DependentUpon>Win_StockInfo.xaml</DependentUpon>
     </Compile>

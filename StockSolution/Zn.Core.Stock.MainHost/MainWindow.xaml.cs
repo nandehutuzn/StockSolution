@@ -53,10 +53,18 @@ namespace Zn.Core.Stock.MainHost
 
         private void btnSetting_Click(object sender, RoutedEventArgs e)
         {
-            Win_StockInfo win = new Win_StockInfo();
-            win.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
-            win.Owner = Application.Current.MainWindow;
-            win.ShowDialog();
+            try
+            {
+                Win_StockInfo win = new Win_StockInfo();
+                win.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+                win.Owner = Application.Current.MainWindow;
+                win.WindowState = System.Windows.WindowState.Maximized;
+                win.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+            }
         }
     }
 }

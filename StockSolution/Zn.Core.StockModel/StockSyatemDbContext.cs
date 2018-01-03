@@ -12,6 +12,12 @@ namespace Zn.Core.StockModel
 {
     public abstract class StockSyatemDbContext : DbContext
     {
+        protected StockSyatemDbContext(string str)
+            : base(str)
+        { 
+        
+        }
+
         /// <summary>
         /// 每日股票模型
         /// </summary>
