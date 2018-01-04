@@ -24,7 +24,7 @@ namespace Zn.Core.Tools
         {
             return GetHttpString(url, Encoding.Default);
         }
-
+         
         /// <summary>
         /// 根据http地址，返回请求得到的数据
         /// </summary>
