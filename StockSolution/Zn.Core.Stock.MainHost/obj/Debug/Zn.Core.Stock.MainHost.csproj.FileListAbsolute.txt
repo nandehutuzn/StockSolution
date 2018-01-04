@@ -23,3 +23,6 @@ E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\En
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Win_StockInfo.baml
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Win_StockInfo.g.cs
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\Zn.Core.StockService.dll
+E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\Newtonsoft.Json.dll
+E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\Zn.Core.StockService.pdb

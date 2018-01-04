@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zn.Core.Tools;
+using Zn.Core.StockService;
 
 namespace Zn.Core.Stock.MainHost
 {
@@ -23,13 +24,11 @@ namespace Zn.Core.Stock.MainHost
     {
         private ILog _log = Logger.Current;
         private const string _key = "AB5B05D5A02E48838E5EDCD96D65132A";
-
+        private IOutterService _outterService = OutterService.Default;
         public MainWindow()
         {
             InitializeComponent();
         }
-
-        //新浪地址  http://blog.csdn.net/littlesmallless/article/details/59171161
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -38,12 +37,11 @@ namespace Zn.Core.Stock.MainHost
             //var result = HttpHelper.GetHttpString(url);//第一个地址需用 UTF-8字符
             //await result;
             //MessageBox.Show(result.Result);
-
         }
 
-        private void btnStart_Click(object sender, RoutedEventArgs e)
+        private async void btnStart_Click(object sender, RoutedEventArgs e)
         {
-
+            await _outterService.Start();
         }
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)

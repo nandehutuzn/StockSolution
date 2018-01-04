@@ -49,7 +49,7 @@ namespace Zn.Core.Tools
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(ex);
+                    _log.Error(string.Format("url: {0}", url), ex);
                     return null;
                 }
             });
