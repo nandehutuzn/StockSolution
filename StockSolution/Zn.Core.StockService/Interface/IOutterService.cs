@@ -26,7 +26,7 @@ namespace Zn.Core.StockService
         /// <param name="stockName"></param>
         /// <param name="type">0 上证，1 深证</param>
         /// <returns></returns>
-        Task AddDailyModel(string date, string stockId, string stockName, string type);
+        Task<StockDailyModel> AddDailyModel(string date, string stockId, string stockName, string type);
 
         /// <summary>
         /// 增加某支股票某个时间段的数据
@@ -36,7 +36,7 @@ namespace Zn.Core.StockService
         /// <param name="stockName"></param>
         /// <param name="type">0 上证，1 深证</param>
         /// <returns></returns>
-        Task AddDailyModels(string dateStart, string  dateEnd, string stockId, string stockName, string type);
+        Task<List<StockDailyModel>> AddDailyModels(string dateStart, string  dateEnd, string stockId, string stockName, string type);
 
         /// <summary>
         /// 增加某个指数每日数据
@@ -44,7 +44,7 @@ namespace Zn.Core.StockService
         /// <param name="indexId"></param>
         /// <param name="type">sh 上证 ， sz 深证</param>
         /// <returns></returns>
-        Task AddIndexModel(string indexId, string type);
+        Task<StockIndexModel> AddIndexModel(string indexId, string type);
 
         /// <summary>
         /// 增加某支股票实时数据
@@ -52,6 +52,6 @@ namespace Zn.Core.StockService
         /// <param name="stockId"></param>
         /// <param name="type">sh 上证 ， sz 深证</param>
         /// <returns></returns>
-        Task AddRealtimeModel(string stockId, string type);
+        Task<StockRealtimeModel> AddRealtimeModel(string stockId, string type);
     }
 }

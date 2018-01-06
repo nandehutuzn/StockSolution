@@ -7,6 +7,7 @@ using System.Threading;
 using Zn.Core.Tools;
 using Zn.Core.StockModel;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace Zn.Core.StockService
 {
@@ -61,10 +62,14 @@ namespace Zn.Core.StockService
             try
             {
                 var tmp = JsonConvert.DeserializeObject<LiangYeeHttpRespHelper>(result);
-                if (tmp != null)
+                if (tmp != null && tmp.Result != null && tmp.Result.Length > 0)
                 {
                     _log.Info(string.Format("url:{0} \n Code:{1} \n Message: {2}", url, tmp.Code, tmp.Message));
                     return ConvertToDailyModel(tmp.Result[0]); //只获取单日的
+                }
+                else if (tmp != null)
+                {
+                    await _log.Info(string.Format("请求失败 URL: {0}, Message: ", url, tmp.Message));
                 }
                 return null;
             }
@@ -75,6 +80,11 @@ namespace Zn.Core.StockService
             }
         }
 
+        /// <summary>
+        /// 获取多支股票每日信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<List<StockDailyModel>> GetDailyModels(string url)
         {
             if (string.IsNullOrEmpty(url))
@@ -85,7 +95,7 @@ namespace Zn.Core.StockService
             try
             {
                 var tmp = JsonConvert.DeserializeObject<LiangYeeHttpRespHelper>(result);
-                if (tmp != null)
+                if (tmp != null && tmp.Result != null && tmp.Result.Length > 0)
                 {
                     _log.Info(string.Format("url:{0} \n Code:{1} \n Message: {2}", url, tmp.Code, tmp.Message));
                     List<StockDailyModel> lstModel = new List<StockDailyModel>();
@@ -94,6 +104,10 @@ namespace Zn.Core.StockService
                         lstModel.Add(ConvertToDailyModel(dataLine));
                     }
                     return lstModel;
+                }
+                else if (tmp != null)
+                {
+                    await _log.Info(string.Format("请求失败 URL: {0}, Message: ", url, tmp.Message));
                 }
                 return null;
             }
@@ -104,15 +118,114 @@ namespace Zn.Core.StockService
             }
         }
 
-
-        public Task<StockModel.StockIndexModel> GetIndexModel(string url)
+        /// <summary>
+        /// 获取指数信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<StockModel.StockIndexModel> GetIndexModel(string url)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException("url");
+            string result = await HttpHelper.GetHttpString(url);
+            if (string.IsNullOrEmpty(result))
+            {
+                await _log.Info(string.Format("获取指数信息失败, {0}", url));
+                return null;
+            }
+            try
+            {
+                string[] data = result.Trim(';').Split(',');
+                if (data.Length >= 6)
+                {
+                    StockIndexModel model = new StockIndexModel()
+                    {
+                        CurrentPoint = double.Parse(data[1]),
+                        CurrentPointRelative = double.Parse(data[2]),
+                        UpOrDownRatio = double.Parse(data[3]),
+                        TradingVolume = double.Parse(data[4]),
+                        TradingPriceSum = double.Parse(data[5]),
+                    };
+                    return model;
+                }
+                else
+                    await _log.Info(string.Format("获取股指数信息数据不全，{0}", url));
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+            }
+            return null;
         }
 
-        public Task<StockModel.StockRealtimeModel> GetRealtimeModel(string url)
+        /// <summary>
+        /// 获取股票实时信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<StockModel.StockRealtimeModel> GetRealtimeModel(string url)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException("url");
+            string result = await HttpHelper.GetHttpString(url);
+            if (string.IsNullOrEmpty(result))
+            {
+                await _log.Info(string.Format("获取股票实时信息失败，{0}", url));
+                return null;
+            }
+            try
+            {
+                string[] data = result.Trim(';').Split(',');
+                if (data.Length >= 32)
+                {
+                    #region 生成model
+
+                    StockRealtimeModel model = new StockRealtimeModel();
+                    model.OpenPrice = double.Parse(data[1]);
+                    model.ClosePriceYesterday = double.Parse(data[2]);
+                    model.NowPrice = double.Parse(data[3]);
+                    model.HighestPriceToday = double.Parse(data[4]);
+                    model.LowestPriceToday = double.Parse(data[5]);
+                    model.CompeteBuy = double.Parse(data[6]);
+                    model.CompeteSell = double.Parse(data[7]);
+                    model.TradingVolume = int.Parse(data[8]);
+                    model.TradingSum = (Int64)double.Parse(data[9]);
+                    model.AmountBuy1 = int.Parse(data[10]);
+                    model.PriceBuy1 = double.Parse(data[11]);
+                    model.AmountBuy2 = int.Parse(data[12]);
+                    model.PriceBuy2 = double.Parse(data[13]);
+                    model.AmountBuy3 = int.Parse(data[14]);
+                    model.PriceBuy3 = double.Parse(data[15]);
+                    model.AmountBuy4 = int.Parse(data[16]);
+                    model.PriceBuy4 = double.Parse(data[17]);
+                    model.AmountBuy5 = int.Parse(data[18]);
+                    model.PriceBuy5 = double.Parse(data[19]);
+                    model.AmountSell1 = int.Parse(data[20]);
+                    model.PriceSell1 = double.Parse(data[21]);
+                    model.AmountSell2 = int.Parse(data[22]);
+                    model.PriceSell2 = double.Parse(data[23]);
+                    model.AmountSell3 = int.Parse(data[24]);
+                    model.PriceSell3 = double.Parse(data[25]);
+                    model.AmountSell4 = int.Parse(data[26]);
+                    model.PriceSell4 = double.Parse(data[27]);
+                    model.AmountSell5 = int.Parse(data[28]);
+                    model.PriceSell5 = double.Parse(data[29]);
+                   
+                    model.Date = Convert.ToDateTime(data[30]);
+                    model.CurrentTime = Convert.ToDateTime(data[30] + " " + data[31]);
+
+                    #endregion
+
+                    return model;
+                }
+                await _log.Info(string.Format("获取股票实时信息数据不全，{0}", url));
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+            }
+            return null;
         }
 
 

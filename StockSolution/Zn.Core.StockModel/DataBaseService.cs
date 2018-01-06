@@ -99,7 +99,6 @@ namespace Zn.Core.StockModel
         {
             if (model == null)
                 throw new ArgumentNullException("model");
-            model.TradeTime = DateTime.Now.Date;
             DailyModel.Add(model);
             Entry(model).State = System.Data.Entity.EntityState.Added;
             return SaveChangesAsync();
@@ -111,7 +110,6 @@ namespace Zn.Core.StockModel
                 throw new ArgumentNullException("models");
             foreach (var model in models)
             {
-                model.TradeTime = DateTime.Now.Date;
                 DailyModel.Add(model);
                 Entry(model).State = System.Data.Entity.EntityState.Added;
             }
@@ -122,7 +120,6 @@ namespace Zn.Core.StockModel
         {
             if (model == null)
                 throw new ArgumentNullException("model");
-            model.Date = DateTime.Now.Date;
             IndexModel.Add(model);
             Entry(model).State = System.Data.Entity.EntityState.Added;
             return SaveChangesAsync();
@@ -134,7 +131,6 @@ namespace Zn.Core.StockModel
                 throw new ArgumentNullException("models");
             foreach (var model in models)
             {
-                model.Date = DateTime.Now.Date;
                 IndexModel.Add(model);
                 Entry(model).State = System.Data.Entity.EntityState.Added;
             }
