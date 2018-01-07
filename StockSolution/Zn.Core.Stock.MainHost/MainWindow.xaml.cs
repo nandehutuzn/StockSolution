@@ -37,6 +37,7 @@ namespace Zn.Core.Stock.MainHost
         {
             _uiSyncContext = SynchronizationContext.Current;
             MessageManager.Register(MessageKey.OPERATEMESSAGE, ShowLog);
+            Unloaded += (s, arge) => _outterService.Stop();
         }
 
         private void ShowLog(object message)
@@ -73,7 +74,7 @@ namespace Zn.Core.Stock.MainHost
                 win.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
                 win.Owner = Application.Current.MainWindow;
                 win.WindowState = System.Windows.WindowState.Maximized;
-                win.ShowDialog();
+                win.Show();
             }
             catch (Exception ex)
             {

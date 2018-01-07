@@ -23,6 +23,18 @@ namespace Zn.Core.StockService
         private IHttpStockService _httpService = HttpStockService.Default;
         private AutoResetEvent _autoResetEventLiangYee = new AutoResetEvent(true);
         private AutoResetEvent _autoResetEventSina = new AutoResetEvent(true);
+        private System.Timers.Timer _timer;
+
+        #endregion
+
+        #region Constructor
+
+        private OutterService()
+        {
+            _timer = new System.Timers.Timer(1000 * 60 * 10); // 10分钟查一次
+            _timer.Elapsed += async (s, e) => await Start();
+            _timer.Start();
+        }
 
         #endregion
 
@@ -40,6 +52,42 @@ namespace Zn.Core.StockService
 
         #endregion
 
+        #region Func
+
+        /// <summary>
+        /// 是否需要开始查询实时股票信息
+        /// </summary>
+        /// <returns></returns>
+        private bool NeedQueryRealtimeStock()
+        {
+            try
+            {
+                string amWorkingTimeStart = "09:30";
+                string amWorkingTimeEnd = "11:30";
+                string pmWorkingTimeStart = "13:00";
+                string pmWorkingTimeEnd = "15:00";
+
+                TimeSpan amWorkingTsStart = DateTime.Parse(amWorkingTimeStart).TimeOfDay;
+                TimeSpan amWorkingTsEnd = DateTime.Parse(amWorkingTimeEnd).TimeOfDay;
+                TimeSpan pmWorkingTsStart = DateTime.Parse(pmWorkingTimeStart).TimeOfDay;
+                TimeSpan pmWorkingTsEnd = DateTime.Parse(pmWorkingTimeEnd).TimeOfDay;
+
+                var time = DateTime.Now.TimeOfDay;
+                if (time >= amWorkingTsStart && time <= amWorkingTsEnd)
+                    return true;
+                else if (time >= pmWorkingTsStart && time <= pmWorkingTsEnd)
+                    return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+                return false;
+            }
+        }
+
+        #endregion
+
         #region Interface
 
         public async Task Start()
@@ -48,22 +96,39 @@ namespace Zn.Core.StockService
                 {
                     try
                     {
-                        var models = _dataService.StockInfoModels(); //从数据库中获取所有股票模型
-                        MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("从数据库拿到 {0} 支股票信息", models.Count));
-                        DateTime lastWorkDay = DateTime.Now;
-                        if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
-                            lastWorkDay = DateTime.Now.AddDays(-1);
-                        else if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
-                            lastWorkDay = DateTime.Now.AddDays(-2);
-                        //models.ForEach(async o => await AddDailyModel(lastWorkDay.ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
-                        //models.ForEach(async o => await AddDailyModels(lastWorkDay.AddDays(-1000).ToString("yyyy-MM-dd"), lastWorkDay.AddDays(-361).ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
-                        models.ForEach(async o => await AddRealtimeModel(o.Id, o.Type));
+                        MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("现在时间：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+                        if (NeedQueryRealtimeStock())
+                        {
+                            var models = _dataService.StockInfoModels(); //从数据库中获取所有股票模型
+                            MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("从数据库拿到 {0} 支股票信息", models.Count));
+                            DateTime lastWorkDay = DateTime.Now;
+                            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
+                                lastWorkDay = DateTime.Now.AddDays(-1);
+                            else if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+                                lastWorkDay = DateTime.Now.AddDays(-2);
+                            //models.ForEach(async o => await AddDailyModel(lastWorkDay.ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
+                            //models.ForEach(async o => await AddDailyModels(lastWorkDay.AddDays(-1000).ToString("yyyy-MM-dd"), lastWorkDay.AddDays(-361).ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
+                            models.ForEach(async o => await AddRealtimeModel(o.Id, o.Type));
+                        }
                     }
                     catch (Exception ex)
                     {
                         _log.Error(ex);
                     }
                 });
+        }
+
+        /// <summary>
+        /// 终止查询
+        /// </summary>
+        public void Stop()
+        {
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Close();
+                _timer = null;
+            }
         }
 
 
@@ -89,8 +154,9 @@ namespace Zn.Core.StockService
                     await _log.Info(string.Format("股票{0} 获取 {1} 信息成功", stockName, date));
                     result.StockID = stockId;
                     result.StockName = stockName;
-                    await _dataService.Insert<StockDailyModel>(result);
-
+                    int i= await _dataService.Insert<StockDailyModel>(result);
+                    string ret = i == 1 ? "成功" : "失败";
+                    await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票 {0}, {1} 数据写入数据库{4}", stockId, date, ret));
                 }
                 _autoResetEventLiangYee.Set();
                 return result;
@@ -126,7 +192,9 @@ namespace Zn.Core.StockService
                         o.StockID = stockId;
                         o.StockName = stockName;
                     });
-                await _dataService.Insert<StockDailyModel>(result);
+                int i = await _dataService.Insert<StockDailyModel>(result);
+                string ret = i == 1 ? "成功" : "失败";
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("{0} 支股票  {1}, {2}----{3} 数据写入数据库{4}", result.Count, stockId, dateStart, dateEnd, ret));
             }
 
             _autoResetEventLiangYee.Set();

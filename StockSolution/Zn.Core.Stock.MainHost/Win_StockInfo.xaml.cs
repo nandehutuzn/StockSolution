@@ -23,6 +23,7 @@ namespace Zn.Core.Stock.MainHost
     {
         private ILog _log = Logger.Current;
         private IDataBaseService _service = DataBaseService.Default;
+        private TaskScheduler _uiScheduler;
 
         public Win_StockInfo()
         {
@@ -31,6 +32,7 @@ namespace Zn.Core.Stock.MainHost
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            _uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             LoadSource();
         }
 
@@ -78,15 +80,15 @@ namespace Zn.Core.Stock.MainHost
             }
         }
 
-        private async void btnAddStock_Click(object sender, RoutedEventArgs e)
+        private void btnAddStock_Click(object sender, RoutedEventArgs e)
         {
-            string stockId = txbStockId.Text;
-            string stockName = txbStockName.Text;
+            string stockId = txbStockId.Text.Trim(); ;
+            string stockName = txbStockName.Text.Trim() ;
             string stockSectorName = cmbSector.SelectedValue.ToString();
             string address = txbAddress.Text;
             double peRatio;
             double.TryParse(txbPE.Text, out peRatio);
-            string type = radioSH.IsChecked == true ? "0" : "1";
+            string type = ToolHelper.GetStockType(stockId);
             if (!string.IsNullOrEmpty(stockId) && !string.IsNullOrEmpty(stockName)&&!string.IsNullOrEmpty(stockSectorName))
             {
                 StockInfoModel model = new StockInfoModel()
@@ -98,13 +100,27 @@ namespace Zn.Core.Stock.MainHost
                     PERatio = peRatio,
                     Type = type,
                 };
-                var result = _service.Insert<StockInfoModel>(model);
-                await result;
-                if (result.Result == 1)
+                Task.Run(() =>
                 {
-                    //MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
-                    LoadSource();
-                }
+                    var entities = _service.StockInfoModels(true).Where(o => o.Id == stockId);
+                    if (entities != null && entities.Count() > 0) //该股票已经存在
+                    {
+                        MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票{0}:{1} 已经存在", stockId, stockName));
+                        return -1;
+                    }
+                    return 0;
+                }).ContinueWith(async t =>
+                    {
+                        if (t.Result == 0)
+                        {
+                            var result = await _service.Insert<StockInfoModel>(model);
+                            if (result == 1)
+                            {
+                                //MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
+                                LoadSource();
+                            }
+                        }
+                    }, _uiScheduler);
             }
         }
 

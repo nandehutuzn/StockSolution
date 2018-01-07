@@ -57,8 +57,8 @@
                         <TextBlock Text="市盈率：" Grid.Row="2" Grid.Column="0" Margin="3"/>
                         <TextBox x:Name="txbPE" Grid.Row="2" Grid.Column="1" Margin="3"/>
                         <StackPanel Grid.Row="2" Grid.Column="2" Margin="3" Orientation="Horizontal">
-                            <RadioButton x:Name="radioSH" Content="上证" GroupName="type" IsChecked="True"/>
-                            <RadioButton Content="深证" GroupName="type"/>
+                            <!--<RadioButton x:Name="radioSH" Content="上证" GroupName="type" IsChecked="True"/>
+                            <RadioButton Content="深证" GroupName="type"/>-->
                         </StackPanel>
                         <Button x:Name="btnAddStock" Margin="3" Grid.Row="2" Grid.Column="3" Content="添加" Click="btnAddStock_Click"/>
                     </Grid>

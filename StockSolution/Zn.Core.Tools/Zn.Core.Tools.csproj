@@ -46,6 +46,7 @@
     <Compile Include="Message\MessageKey.cs" />
     <Compile Include="Message\MessageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

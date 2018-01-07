@@ -19,6 +19,12 @@ namespace Zn.Core.StockService
         Task Start();
 
         /// <summary>
+        /// 终止
+        /// </summary>
+        /// <returns></returns>
+        void Stop();
+
+        /// <summary>
         /// 增加某支股票每日数据
         /// </summary>
         /// <param name="date"></param>
