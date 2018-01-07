@@ -95,119 +95,41 @@ namespace Zn.Core.StockModel
 
         #endregion
 
-        public Task<int> InsertDailyModel(StockDailyModel model)
+        public Task<int> Insert<TEntity>(TEntity model) where TEntity : class
         {
             if (model == null)
                 throw new ArgumentNullException("model");
-            DailyModel.Add(model);
+            Set<TEntity>().Add(model);
             Entry(model).State = System.Data.Entity.EntityState.Added;
             return SaveChangesAsync();
         }
 
-        public Task<int> InsertDailyModel(IList<StockDailyModel> models)
+        public Task<int> Insert<TEntity>(IList<TEntity> models) where TEntity : class
         {
             if (models == null)
                 throw new ArgumentNullException("models");
             foreach (var model in models)
             {
-                DailyModel.Add(model);
+                Set<TEntity>().Add(model);
                 Entry(model).State = System.Data.Entity.EntityState.Added;
             }
             return SaveChangesAsync();
         }
 
-        public Task<int> InsertIndexModel(StockIndexModel model)
-        {
-            if (model == null)
-                throw new ArgumentNullException("model");
-            IndexModel.Add(model);
-            Entry(model).State = System.Data.Entity.EntityState.Added;
-            return SaveChangesAsync();
-        }
 
-        public Task<int> InsertIndexModel(IList<StockIndexModel> models)
-        {
-            if (models == null)
-                throw new ArgumentNullException("models");
-            foreach (var model in models)
-            {
-                IndexModel.Add(model);
-                Entry(model).State = System.Data.Entity.EntityState.Added;
-            }
-            return SaveChangesAsync();
-        }
 
-        public Task<int> InsertRealtimeModel(StockRealtimeModel model)
+        public Task<int> Delete<TEntity>(TEntity model) where TEntity : class
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
-            model.CurrentTime = DateTime.Now;
-            model.Date = DateTime.Now.Date;
-            RealtimeModel.Add(model);
-            Entry(model).State = System.Data.Entity.EntityState.Added;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> InsertRealtimeModel(IList<StockRealtimeModel> models)
-        {
-            if (models == null)
-                throw new ArgumentNullException("models");
-            foreach (var model in models)
-            {
-                model.CurrentTime = DateTime.Now;
-                model.Date = DateTime.Now.Date;
-                RealtimeModel.Add(model);
-                Entry(model).State = System.Data.Entity.EntityState.Added;
-            }
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteDailyModel(StockDailyModel model)
-        {
-            DailyModel.Remove(model);
+            Set<TEntity>().Remove(model);
             Entry(model).State = System.Data.Entity.EntityState.Deleted;
             return SaveChangesAsync();
         }
 
-        public Task<int> DeleteDailyModel(IList<StockDailyModel> models)
+        public Task<int> Delete<TEntity>(IList<TEntity> models) where TEntity : class
         {
             foreach (var model in models)
             {
-                DailyModel.Remove(model);
-                Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            }
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteIndexModel(StockIndexModel model)
-        {
-            IndexModel.Remove(model);
-            Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteIndexModel(IList<StockIndexModel> models)
-        {
-            foreach (var model in models)
-            {
-                IndexModel.Remove(model);
-                Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            }
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteRealtimeModel(StockRealtimeModel model)
-        {
-            RealtimeModel.Remove(model);
-            Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteRealtimeModel(IList<StockRealtimeModel> models)
-        {
-            foreach (var model in models)
-            {
-                RealtimeModel.Remove(model);
+                Set<TEntity>().Remove(model);
                 Entry(model).State = System.Data.Entity.EntityState.Deleted;
             }
             return SaveChangesAsync();
@@ -215,76 +137,5 @@ namespace Zn.Core.StockModel
 
         #endregion
 
-        public Task<int> InsertStockInfoModel(StockInfoModel model)
-        {
-            if (model == null)
-                throw new ArgumentNullException("model");
-            StockInfoModel.Add(model);
-            Entry(model).State = System.Data.Entity.EntityState.Added;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> InsretStockInfoModel(IList<StockInfoModel> models)
-        {
-            foreach (var model in models)
-            {
-                StockInfoModel.Add(model);
-                Entry(model).State = System.Data.Entity.EntityState.Added;
-            }
-            return SaveChangesAsync();
-        }
-
-        public Task<int> InsertSectorEnumModel(StockSectorEnumModel model)
-        {
-            if (model == null)
-                throw new ArgumentNullException("model");
-            SectorEnumModel.Add(model);
-            Entry(model).State = System.Data.Entity.EntityState.Added;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> InsertSectorEnumModel(IList<StockSectorEnumModel> models)
-        {
-            foreach (var model in models)
-            {
-                SectorEnumModel.Add(model);
-                Entry(model).State = System.Data.Entity.EntityState.Added;
-            }
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteStockInfoModel(StockInfoModel model)
-        {
-            StockInfoModel.Remove(model);
-            Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteStockInfoModel(IList<StockInfoModel> models)
-        {
-            foreach (var model in models)
-            {
-                StockInfoModel.Remove(model);
-                Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            }
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteStockSectorEnumModel(StockSectorEnumModel model)
-        {
-            SectorEnumModel.Remove(model);
-            Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            return SaveChangesAsync();
-        }
-
-        public Task<int> DeleteStoclSectorEnumMpdel(IList<StockSectorEnumModel> models)
-        {
-            foreach (var model in models)
-            {
-                SectorEnumModel.Remove(model);
-                Entry(model).State = System.Data.Entity.EntityState.Deleted;
-            }
-            return SaveChangesAsync();
-        }
     }
 }

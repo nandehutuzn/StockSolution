@@ -68,7 +68,7 @@ namespace Zn.Core.Stock.MainHost
                 {
                     SectorName = name,
                 };
-                var result = _service.InsertSectorEnumModel(model);
+                var result = _service.Insert<StockSectorEnumModel>(model);
                 await result;
                 if (result.Result == 1)
                 {
@@ -98,7 +98,7 @@ namespace Zn.Core.Stock.MainHost
                     PERatio = peRatio,
                     Type = type,
                 };
-                var result = _service.InsertStockInfoModel(model);
+                var result = _service.Insert<StockInfoModel>(model);
                 await result;
                 if (result.Result == 1)
                 {

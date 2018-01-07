@@ -87,7 +87,7 @@ namespace Zn.Core.StockService
                     await _log.Info(string.Format("股票{0} 获取 {1} 信息成功", stockName, date));
                     result.StockID = stockId;
                     result.StockName = stockName;
-                    await _dataService.InsertDailyModel(result);
+                    await _dataService.Insert<StockDailyModel>(result);
 
                 }
                 _autoResetEventLiangYee.Set();
@@ -123,7 +123,7 @@ namespace Zn.Core.StockService
                         o.StockID = stockId;
                         o.StockName = stockName;
                     });
-                await _dataService.InsertDailyModel(result);
+                await _dataService.Insert<StockDailyModel>(result);
             }
 
             _autoResetEventLiangYee.Set();
@@ -150,7 +150,7 @@ namespace Zn.Core.StockService
             {
                 await _log.Info(string.Format("获取指数 {0} 实时信息成功", indexId));
                 result.IndexID = indexId;
-                await _dataService.InsertIndexModel(result);
+                await _dataService.Insert<StockIndexModel>(result);
             }
             _autoResetEventSina.Set();
             return result;
@@ -169,14 +169,14 @@ namespace Zn.Core.StockService
             else if(type == "1")
                 type = "sz";
             string url = string.Format(Constant.ConstValue.XINAREALTIMEURL, type, stockId);
-            _autoResetEventSina.WaitOne();
-            Thread.Sleep(500);
+            _autoResetEventSina.WaitOne(); //EF 不支持并发写入
+            //Thread.Sleep(500);
             var result = await _httpService.GetRealtimeModel(url);
             if (result != null)
             {
                 await _log.Info(string.Format("获取股票 {0} 实时信息成功", stockId));
                 result.StockID = stockId;
-                await _dataService.InsertRealtimeModel(result);
+                await _dataService.Insert<StockRealtimeModel>(result);
 
             }
             _autoResetEventSina.Set();

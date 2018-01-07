@@ -21,44 +21,14 @@ namespace Zn.Core.StockModel
 
         List<StockInfoModel> StockInfoModels(bool needUpdate = false);
 
-        Task<int> InsertDailyModel(StockDailyModel model);
+        Task<int> Insert<TEnity>(TEnity model) where TEnity : class;
 
-        Task<int> InsertDailyModel(IList<StockDailyModel> models);
+        Task<int> Insert<TEnity>(IList<TEnity> models) where TEnity : class;
 
-        Task<int> InsertIndexModel(StockIndexModel model);
 
-        Task<int> InsertIndexModel(IList<StockIndexModel> models);
+        Task<int> Delete<TEnity>(TEnity model) where TEnity : class;
 
-        Task<int> InsertRealtimeModel(StockRealtimeModel model);
+        Task<int> Delete<TEnity>(IList<TEnity> models) where TEnity : class;
 
-        Task<int> InsertRealtimeModel(IList<StockRealtimeModel> models);
-
-        Task<int> InsertStockInfoModel(StockInfoModel model);
-
-        Task<int> InsretStockInfoModel(IList<StockInfoModel> models);
-
-        Task<int> InsertSectorEnumModel(StockSectorEnumModel model);
-
-        Task<int> InsertSectorEnumModel(IList<StockSectorEnumModel> models);
-
-        Task<int> DeleteDailyModel(StockDailyModel model);
-
-        Task<int> DeleteDailyModel(IList<StockDailyModel> models);
-
-        Task<int> DeleteIndexModel(StockIndexModel model);
-
-        Task<int> DeleteIndexModel(IList<StockIndexModel> models);
-
-        Task<int> DeleteRealtimeModel(StockRealtimeModel model);
-
-        Task<int> DeleteRealtimeModel(IList<StockRealtimeModel> models);
-
-        Task<int> DeleteStockInfoModel(StockInfoModel model);
-
-        Task<int> DeleteStockInfoModel(IList<StockInfoModel> models);
-
-        Task<int> DeleteStockSectorEnumModel(StockSectorEnumModel model);
-
-        Task<int> DeleteStoclSectorEnumMpdel(IList<StockSectorEnumModel> models);
     }
 }
