@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zn.Core.Tools;
 using Zn.Core.StockService;
+using System.Threading;
 
 namespace Zn.Core.Stock.MainHost
 {
@@ -25,9 +26,24 @@ namespace Zn.Core.Stock.MainHost
         private ILog _log = Logger.Current;
         private const string _key = "AB5B05D5A02E48838E5EDCD96D65132A";
         private IOutterService _outterService = OutterService.Default;
+        private SynchronizationContext _uiSyncContext;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _uiSyncContext = SynchronizationContext.Current;
+            MessageManager.Register(MessageKey.OPERATEMESSAGE, ShowLog);
+        }
+
+        private void ShowLog(object message)
+        { 
+            string msg = message as string;
+            if (msg != null)
+                _uiSyncContext.Post(o => listBoxLog.Items.Add(msg), null);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -64,5 +80,6 @@ namespace Zn.Core.Stock.MainHost
                 _log.Error(ex);
             }
         }
+
     }
 }

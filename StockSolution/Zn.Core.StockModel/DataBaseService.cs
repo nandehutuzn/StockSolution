@@ -95,6 +95,12 @@ namespace Zn.Core.StockModel
 
         #endregion
 
+        /// <summary>
+        /// 插入单条数据
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public Task<int> Insert<TEntity>(TEntity model) where TEntity : class
         {
             if (model == null)
@@ -104,6 +110,12 @@ namespace Zn.Core.StockModel
             return SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 插入多条数据
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="models"></param>
+        /// <returns></returns>
         public Task<int> Insert<TEntity>(IList<TEntity> models) where TEntity : class
         {
             if (models == null)
@@ -117,7 +129,12 @@ namespace Zn.Core.StockModel
         }
 
 
-
+        /// <summary>
+        /// 删除单条数据
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public Task<int> Delete<TEntity>(TEntity model) where TEntity : class
         {
             Set<TEntity>().Remove(model);
@@ -125,6 +142,12 @@ namespace Zn.Core.StockModel
             return SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 删除多条数据
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="models"></param>
+        /// <returns></returns>
         public Task<int> Delete<TEntity>(IList<TEntity> models) where TEntity : class
         {
             foreach (var model in models)

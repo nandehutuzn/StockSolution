@@ -49,6 +49,7 @@ namespace Zn.Core.StockService
                     try
                     {
                         var models = _dataService.StockInfoModels(); //从数据库中获取所有股票模型
+                        MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("从数据库拿到 {0} 支股票信息", models.Count));
                         DateTime lastWorkDay = DateTime.Now;
                         if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
                             lastWorkDay = DateTime.Now.AddDays(-1);
@@ -84,6 +85,7 @@ namespace Zn.Core.StockService
                 var result = await _httpService.GetDailyModel(url);
                 if (result != null)
                 {
+                    await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票{0} 获取 {1} 信息成功", stockName, date));
                     await _log.Info(string.Format("股票{0} 获取 {1} 信息成功", stockName, date));
                     result.StockID = stockId;
                     result.StockName = stockName;
@@ -117,6 +119,7 @@ namespace Zn.Core.StockService
             var result = await _httpService.GetDailyModels(url);
             if (result != null)
             {
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票{0} 获取 {1}---{2} 信息成功", stockName, dateStart, dateEnd));
                 await _log.Info(string.Format("股票{0} 获取 {1}---{2} 信息成功", stockName, dateStart, dateEnd));
                 result.ForEach(o =>
                     {
@@ -148,6 +151,7 @@ namespace Zn.Core.StockService
             var result = await _httpService.GetIndexModel(url);
             if (result != null)
             {
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("获取指数 {0} 实时信息成功", indexId));
                 await _log.Info(string.Format("获取指数 {0} 实时信息成功", indexId));
                 result.IndexID = indexId;
                 await _dataService.Insert<StockIndexModel>(result);
@@ -174,10 +178,12 @@ namespace Zn.Core.StockService
             var result = await _httpService.GetRealtimeModel(url);
             if (result != null)
             {
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("获取股票 {0} 实时信息成功", stockId));
                 await _log.Info(string.Format("获取股票 {0} 实时信息成功", stockId));
                 result.StockID = stockId;
-                await _dataService.Insert<StockRealtimeModel>(result);
-
+                int i= await _dataService.Insert<StockRealtimeModel>(result);
+                string ret = i == 1 ? "成功" : "失败";
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票 {0}, {1} 实时数据写入数据库{2}", stockId, result.CurrentTime.ToString(), ret));
             }
             _autoResetEventSina.Set();
             return result;

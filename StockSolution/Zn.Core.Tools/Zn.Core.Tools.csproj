@@ -43,6 +43,8 @@
     <Compile Include="HttpHelper.cs" />
     <Compile Include="Interface\ILog.cs" />
     <Compile Include="Log\Logger.cs" />
+    <Compile Include="Message\MessageKey.cs" />
+    <Compile Include="Message\MessageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

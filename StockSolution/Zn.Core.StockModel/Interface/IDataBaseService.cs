@@ -21,13 +21,36 @@ namespace Zn.Core.StockModel
 
         List<StockInfoModel> StockInfoModels(bool needUpdate = false);
 
+        /// <summary>
+        /// 插入单条数据
+        /// </summary>
+        /// <typeparam name="TEnity"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
         Task<int> Insert<TEnity>(TEnity model) where TEnity : class;
 
+        /// <summary>
+        /// 插入多条数据
+        /// </summary>
+        /// <typeparam name="TEnity"></typeparam>
+        /// <param name="models"></param>
+        /// <returns></returns>
         Task<int> Insert<TEnity>(IList<TEnity> models) where TEnity : class;
 
-
+        /// <summary>
+        /// 删除单条数据
+        /// </summary>
+        /// <typeparam name="TEnity"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
         Task<int> Delete<TEnity>(TEnity model) where TEnity : class;
 
+        /// <summary>
+        /// 删除多条数据
+        /// </summary>
+        /// <typeparam name="TEnity"></typeparam>
+        /// <param name="models"></param>
+        /// <returns></returns>
         Task<int> Delete<TEnity>(IList<TEnity> models) where TEnity : class;
 
     }

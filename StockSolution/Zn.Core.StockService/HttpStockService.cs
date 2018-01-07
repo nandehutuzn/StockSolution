@@ -69,6 +69,7 @@ namespace Zn.Core.StockService
                 }
                 else if (tmp != null)
                 {
+                    await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("请求失败 URL: {0}, Message: ", url, tmp.Message));
                     await _log.Info(string.Format("请求失败 URL: {0}, Message: ", url, tmp.Message));
                 }
                 return null;
@@ -107,6 +108,7 @@ namespace Zn.Core.StockService
                 }
                 else if (tmp != null)
                 {
+                    await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("请求失败 URL: {0}, Message: ", url, tmp.Message));
                     await _log.Info(string.Format("请求失败 URL: {0}, Message: ", url, tmp.Message));
                 }
                 return null;
@@ -171,6 +173,7 @@ namespace Zn.Core.StockService
             string result = await HttpHelper.GetHttpString(url);
             if (string.IsNullOrEmpty(result))
             {
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("获取股票实时信息失败，{0}", url));
                 await _log.Info(string.Format("获取股票实时信息失败，{0}", url));
                 return null;
             }
@@ -219,6 +222,7 @@ namespace Zn.Core.StockService
 
                     return model;
                 }
+                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("获取股票实时信息数据不全，{0}，结果为{1}", url, result));
                 await _log.Info(string.Format("获取股票实时信息数据不全，{0}", url));
             }
             catch (Exception ex)
