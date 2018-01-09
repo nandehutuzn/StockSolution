@@ -31,9 +31,20 @@ namespace Zn.Core.StockService
 
         private OutterService()
         {
+            //注册有新股票加入消息通知
+            MessageManager.Register(MessageKey.ADDSTOCKINFOMODE, AddStockInfoModeCallback);
             _timer = new System.Timers.Timer(1000 * 60 * 10); // 10分钟查一次
             _timer.Elapsed += async (s, e) => await Start();
             _timer.Start();
+        }
+
+        private async void AddStockInfoModeCallback(object obj)
+        {
+            List<string> lstInfo = obj as List<string>;
+            if (lstInfo != null && lstInfo.Count == 3)
+            {
+                await AddDailyModels(DateTime.Now.AddDays(-360).ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), lstInfo[0], lstInfo[1], lstInfo[2]);
+            }
         }
 
         #endregion
@@ -110,6 +121,8 @@ namespace Zn.Core.StockService
                             //models.ForEach(async o => await AddDailyModels(lastWorkDay.AddDays(-1000).ToString("yyyy-MM-dd"), lastWorkDay.AddDays(-361).ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
                             models.ForEach(async o => await AddRealtimeModel(o.Id, o.Type));
                         }
+
+                     
                     }
                     catch (Exception ex)
                     {
@@ -156,7 +169,7 @@ namespace Zn.Core.StockService
                     result.StockName = stockName;
                     int i= await _dataService.Insert<StockDailyModel>(result);
                     string ret = i == 1 ? "成功" : "失败";
-                    await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票 {0}, {1} 数据写入数据库{4}", stockId, date, ret));
+                    await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票 {0}, {1} 数据写入数据库{2}", stockId, date, ret));
                 }
                 _autoResetEventLiangYee.Set();
                 return result;
@@ -193,7 +206,7 @@ namespace Zn.Core.StockService
                         o.StockName = stockName;
                     });
                 int i = await _dataService.Insert<StockDailyModel>(result);
-                string ret = i == 1 ? "成功" : "失败";
+                string ret = i == result.Count ? "成功" : "失败";
                 await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("{0} 支股票  {1}, {2}----{3} 数据写入数据库{4}", result.Count, stockId, dateStart, dateEnd, ret));
             }
 

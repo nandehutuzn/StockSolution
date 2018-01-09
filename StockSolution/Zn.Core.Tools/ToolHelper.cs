@@ -27,7 +27,7 @@ namespace Zn.Core.Tools
             if (!int.TryParse(stockId, out tmp))
                 throw new ArgumentException("输入股票代码有误");
 
-            if (stockId.StartsWith("002"))  //可以确定的是深证上市的股票是  002 开头的
+            if (stockId.StartsWith("002") || stockId.StartsWith("000"))  //可以确定的是深证上市的股票是  002 开头的
                 return "1";
 
             return "0"; 

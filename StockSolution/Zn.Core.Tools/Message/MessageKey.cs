@@ -15,5 +15,10 @@ namespace Zn.Core.Tools
         /// 后台执行操作消息
         /// </summary>
         public const string OPERATEMESSAGE = "OPERATEMESSAGE";
+
+        /// <summary>
+        /// 新增一支股票
+        /// </summary>
+        public const string ADDSTOCKINFOMODE = "ADDSTOCKINFOMODE";
     }
 }

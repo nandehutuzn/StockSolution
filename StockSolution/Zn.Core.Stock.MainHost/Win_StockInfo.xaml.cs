@@ -116,7 +116,9 @@ namespace Zn.Core.Stock.MainHost
                             var result = await _service.Insert<StockInfoModel>(model);
                             if (result == 1)
                             {
-                                //MessageBox.Show("添加成功", "提示", MessageBoxButton.OK);
+                                //先发一个广播通知有新股票添加进数据库
+                                await MessageManager.NotifyMessage(MessageKey.ADDSTOCKINFOMODE, new List<string>() { stockId, stockName, type });
+                                await MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("股票{0}，{1} 添加成功", stockId, stockName));
                                 LoadSource();
                             }
                         }
