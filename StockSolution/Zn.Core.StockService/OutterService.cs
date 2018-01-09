@@ -7,6 +7,9 @@ using System.Threading;
 using Zn.Core.Tools;
 using Zn.Core.StockModel;
 using Zn.Core.StockService.Constant;
+using Zn.Core.StockService.WCF;
+using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace Zn.Core.StockService
 {
@@ -24,6 +27,7 @@ namespace Zn.Core.StockService
         private AutoResetEvent _autoResetEventLiangYee = new AutoResetEvent(true);
         private AutoResetEvent _autoResetEventSina = new AutoResetEvent(true);
         private System.Timers.Timer _timer;
+        private ServiceHost _host;
 
         #endregion
 
@@ -36,6 +40,30 @@ namespace Zn.Core.StockService
             _timer = new System.Timers.Timer(1000 * 60 * 10); // 10分钟查一次
             _timer.Elapsed += async (s, e) => await Start();
             _timer.Start();
+            InitWcfService();
+        }
+
+        private void InitWcfService()
+        {
+            try
+            {
+                Uri baseAddress = new Uri("http://localhost:8001/StockWcfService");
+                _host = new ServiceHost(typeof(StockWcfService), baseAddress);
+
+                _host.AddServiceEndpoint(typeof(IStockWcfService), new WSDualHttpBinding(), "");
+                _host.Opening += (s, e) => MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("WCF启动：{0}", DateTime.Now.ToString()));
+
+                ////将HttpGetEnabled属性设置为true 才能发布元数据
+                ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
+                smb.HttpGetEnabled = true;
+                _host.Description.Behaviors.Add(smb);
+                _host.Open();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+                MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("WCF服务启动失败: {0}", ex.Message));
+            }
         }
 
         private async void AddStockInfoModeCallback(object obj)
@@ -107,6 +135,7 @@ namespace Zn.Core.StockService
                 {
                     try
                     {
+                        StockWcfService.LstCallback.ForEach(o => o.PushMessage("登录成功！"));
                         MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("现在时间：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                         if (NeedQueryRealtimeStock())
                         {
@@ -141,6 +170,10 @@ namespace Zn.Core.StockService
                 _timer.Stop();
                 _timer.Close();
                 _timer = null;
+            }
+            if (_host != null)
+            {
+                _host.Close();
             }
         }
 

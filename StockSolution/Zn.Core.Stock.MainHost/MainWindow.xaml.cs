@@ -25,7 +25,7 @@ namespace Zn.Core.Stock.MainHost
     {
         private ILog _log = Logger.Current;
         private const string _key = "AB5B05D5A02E48838E5EDCD96D65132A";
-        private IOutterService _outterService = OutterService.Default;
+        private IOutterService _outterService;
         private SynchronizationContext _uiSyncContext;
         public MainWindow()
         {
@@ -38,6 +38,7 @@ namespace Zn.Core.Stock.MainHost
             _uiSyncContext = SynchronizationContext.Current;
             MessageManager.Register(MessageKey.OPERATEMESSAGE, ShowLog);
             Unloaded += (s, arge) => _outterService.Stop();
+            _outterService = OutterService.Default;
         }
 
         private void ShowLog(object message)
