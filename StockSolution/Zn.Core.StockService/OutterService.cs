@@ -37,10 +37,6 @@ namespace Zn.Core.StockService
         {
             //注册有新股票加入消息通知
             MessageManager.Register(MessageKey.ADDSTOCKINFOMODE, AddStockInfoModeCallback);
-            _timer = new System.Timers.Timer(1000 * 60 * 10); // 10分钟查一次
-            _timer.Elapsed += async (s, e) => await Start();
-            _timer.Start();
-            InitWcfService();
         }
 
         private void InitWcfService()
@@ -125,39 +121,58 @@ namespace Zn.Core.StockService
             }
         }
 
+        private async Task StartWork()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    StockWcfService.LstCallback.ForEach(o => o.PushMessage("登录成功！"));
+                    MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("现在时间：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+                    if (NeedQueryRealtimeStock())
+                    {
+                        var models = _dataService.StockInfoModels(); //从数据库中获取所有股票模型
+                        MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("从数据库拿到 {0} 支股票信息", models.Count));
+                        DateTime lastWorkDay = DateTime.Now;
+                        if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
+                            lastWorkDay = DateTime.Now.AddDays(-1);
+                        else if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+                            lastWorkDay = DateTime.Now.AddDays(-2);
+                        //models.ForEach(async o => await AddDailyModel(lastWorkDay.ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
+                        //models.ForEach(async o => await AddDailyModels(lastWorkDay.AddDays(-1000).ToString("yyyy-MM-dd"), lastWorkDay.AddDays(-361).ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
+                        models.ForEach(async o => await AddRealtimeModel(o.Id, o.Type));
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(ex);
+                }
+            });
+        }
+
+
         #endregion
 
         #region Interface
 
-        public async Task Start()
+        public void Start()
         {
-            await Task.Run(() =>
-                {
-                    try
-                    {
-                        StockWcfService.LstCallback.ForEach(o => o.PushMessage("登录成功！"));
-                        MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("现在时间：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-                        if (NeedQueryRealtimeStock())
-                        {
-                            var models = _dataService.StockInfoModels(); //从数据库中获取所有股票模型
-                            MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("从数据库拿到 {0} 支股票信息", models.Count));
-                            DateTime lastWorkDay = DateTime.Now;
-                            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
-                                lastWorkDay = DateTime.Now.AddDays(-1);
-                            else if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
-                                lastWorkDay = DateTime.Now.AddDays(-2);
-                            //models.ForEach(async o => await AddDailyModel(lastWorkDay.ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
-                            //models.ForEach(async o => await AddDailyModels(lastWorkDay.AddDays(-1000).ToString("yyyy-MM-dd"), lastWorkDay.AddDays(-361).ToString("yyyy-MM-dd"), o.Id, o.Name, o.Type));
-                            models.ForEach(async o => await AddRealtimeModel(o.Id, o.Type));
-                        }
+            //UserInfoModel model = new UserInfoModel()
+            //{
+            //    LoginName = "zhangning",
+            //    LoginPassWord = "123456",
+            //    LastLoginTime = DateTime.Now,
+            //    IsOnLine = false,
+            //};
+            //_dataService.Insert<UserInfoModel>(model);
 
-                     
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.Error(ex);
-                    }
-                });
+            MessageManager.NotifyMessage(MessageKey.OPERATEMESSAGE, string.Format("现在时间：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+            _timer = new System.Timers.Timer(1000 * 60 * 10); // 10分钟查一次
+            _timer.Elapsed += async (s, e) => await StartWork();
+            _timer.Start();
+            InitWcfService();
         }
 
         /// <summary>

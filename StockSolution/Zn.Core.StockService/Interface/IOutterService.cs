@@ -16,7 +16,7 @@ namespace Zn.Core.StockService
         /// 启动
         /// </summary>
         /// <returns></returns>
-        Task Start();
+        void Start();
 
         /// <summary>
         /// 终止

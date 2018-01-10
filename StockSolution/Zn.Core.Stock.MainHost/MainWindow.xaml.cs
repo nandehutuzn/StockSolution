@@ -57,9 +57,9 @@ namespace Zn.Core.Stock.MainHost
             //MessageBox.Show(result.Result);
         }
 
-        private async void btnStart_Click(object sender, RoutedEventArgs e)
+        private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            await _outterService.Start();
+            _outterService.Start();
         }
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)
