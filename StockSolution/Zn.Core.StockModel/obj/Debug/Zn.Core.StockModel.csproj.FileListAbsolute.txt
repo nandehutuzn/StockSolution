@@ -1,0 +1,12 @@
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\Zn.Core.StockModel.dll.config
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\Zn.Core.StockModel.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\Zn.Core.StockModel.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\EntityFramework.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\EntityFramework.SqlServer.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\Zn.Core.Tools.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\Zn.Core.Tools.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\EntityFramework.xml
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\bin\Debug\EntityFramework.SqlServer.xml
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\obj\Debug\Zn.Core.StockModel.csprojResolveAssemblyReference.cache
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\obj\Debug\Zn.Core.StockModel.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockModel\obj\Debug\Zn.Core.StockModel.pdb

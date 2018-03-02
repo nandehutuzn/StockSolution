@@ -3,3 +3,8 @@ E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Tools\bin\Debug\Zn.Core.Too
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Tools\obj\Debug\Zn.Core.Tools.dll
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Tools\obj\Debug\Zn.Core.Tools.pdb
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Tools\obj\Debug\Zn.Core.Tools.csprojResolveAssemblyReference.cache
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Tools\bin\Debug\Zn.Core.Tools.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Tools\bin\Debug\Zn.Core.Tools.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Tools\obj\Debug\Zn.Core.Tools.csprojResolveAssemblyReference.cache
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Tools\obj\Debug\Zn.Core.Tools.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Tools\obj\Debug\Zn.Core.Tools.pdb

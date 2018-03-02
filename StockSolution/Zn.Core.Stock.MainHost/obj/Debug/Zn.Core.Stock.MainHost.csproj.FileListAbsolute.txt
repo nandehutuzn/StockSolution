@@ -26,3 +26,6 @@ E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Zn
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Zn.Core.Stock.MainHost.csproj.GenerateResource.Cache
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Zn.Core.Stock.MainHost.exe
 E:\VS2013\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Zn.Core.Stock.MainHost.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\bin\Debug\Zn.Core.Stock.MainHost.exe.config
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Zn.Core.Stock.MainHost.exe
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.Stock.MainHost\obj\Debug\Zn.Core.Stock.MainHost.pdb
