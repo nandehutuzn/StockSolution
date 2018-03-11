@@ -1,0 +1,16 @@
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\obj\Debug\Zn.Core.StockService.csprojResolveAssemblyReference.cache
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.StockService.dll.config
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.StockService.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.StockService.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\EntityFramework.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\EntityFramework.SqlServer.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Newtonsoft.Json.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.StockModel.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.Tools.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.StockModel.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Zn.Core.Tools.pdb
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\EntityFramework.xml
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\EntityFramework.SqlServer.xml
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\bin\Debug\Newtonsoft.Json.xml
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\obj\Debug\Zn.Core.StockService.dll
+F:\Code\Github\StockSolution\StockSolution\Zn.Core.StockService\obj\Debug\Zn.Core.StockService.pdb
