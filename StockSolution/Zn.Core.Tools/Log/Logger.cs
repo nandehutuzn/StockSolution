@@ -114,7 +114,7 @@ namespace Zn.Core.Tools
 
         public Task Debug(Exception exception)
         {
-            return Log(null, exception, MethodBase.GetCurrentMethod().Name);
+            return Log(exception.Message, exception, MethodBase.GetCurrentMethod().Name);
         }
 
         public Task Debug(string message, Exception exception)
@@ -129,7 +129,7 @@ namespace Zn.Core.Tools
 
         public Task Error(Exception exception)
         {
-            return Log(null, exception, MethodBase.GetCurrentMethod().Name);
+            return Log(exception.Message, exception, MethodBase.GetCurrentMethod().Name);
         }
 
         public Task Error(string message, Exception exception)
@@ -144,7 +144,7 @@ namespace Zn.Core.Tools
 
         public Task Fatal(Exception exception)
         {
-            return Log(null, exception, MethodBase.GetCurrentMethod().Name);
+            return Log(exception.Message, exception, MethodBase.GetCurrentMethod().Name);
         }
 
         public Task Fatal(string message, Exception exception)
@@ -159,7 +159,7 @@ namespace Zn.Core.Tools
 
         public Task Info(Exception exception)
         {
-            return Log(null, exception, MethodBase.GetCurrentMethod().Name);
+            return Log(exception.Message, exception, MethodBase.GetCurrentMethod().Name);
         }
 
         public Task Info(string message, Exception exception)
@@ -174,7 +174,7 @@ namespace Zn.Core.Tools
 
         public Task Warn(Exception exception)
         {
-            return Log(null, exception, MethodBase.GetCurrentMethod().Name);
+            return Log(exception.Message, exception, MethodBase.GetCurrentMethod().Name);
         }
 
         public Task Warn(string message, Exception exception)
